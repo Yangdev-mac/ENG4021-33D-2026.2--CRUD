@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CineLog | Meu catálogo</title>
+    <link rel="stylesheet" href="{% static 'filmes/style.css' %}">
+</head>
+<body>
+    <header class="topo">
+        <div class="largura cabecalho">
+            <a class="marca" href="{% url 'inicio' %}">▶ CineLog</a>
+            <a class="link-topo" href="#cadastro">+ Novo filme</a>
+        </div>
+    </header>
+
+    <main class="largura">
+        <section class="destaque">
+            <p class="sobre">MEU ESPAÇO DE CINEMA</p>
+            <h1>Organize os filmes do seu jeito.</h1>
+            <p>Guarde seus favoritos, acompanhe o que já assistiu e monte sua lista.</p>
+            <div class="numeros">
+                <div><strong>{{ total }}</strong><span>filmes cadastrados</span></div>
+                <div><strong>{{ assistidos }}</strong><span>já assistidos</span></div>
+            </div>
+        </section>
+
+        <div class="principal">
+            <section class="painel lista" id="catalogo">
+                <div class="titulo-secao">
+                    <div>
+                        <p class="etiqueta">SUA COLEÇÃO</p>
+                        <h2>Minha lista de filmes</h2>
+                    </div>
+                </div>
+
+                <form class="busca-local" method="get" action="{% url 'inicio' %}">
+                    <input type="search" name="busca" placeholder="Pesquisar na minha lista..." value="{{ busca }}" aria-label="Buscar filmes cadastrados">
+                    <button class="botao botao-escuro" type="submit">Pesquisar</button>
+                    {% if busca %}<a class="limpar" href="{% url 'inicio' %}">Limpar</a>{% endif %}
+                </form>
+
+                <div class="grade-filmes">
+                    {% for filme in filmes %}
+                    <article class="filme-card">
+                        <div class="filme-topo">
+                            <span class="ano">{{ filme.ano }}</span>
+                            {% if filme.assistido %}
+                                <span class="situacao visto">✓ Assistido</span>
+                            {% else %}
+                                <span class="situacao pendente">Quero assistir</span>
+                            {% endif %}
+                        </div>
+                        <h3>{{ filme.titulo }}</h3>
+                        <p>Direção: {{ filme.diretor }}</p>
+                        <p>Gênero: {{ filme.genero }}</p>
+                        <div class="acoes">
+                            <a class="botao botao-contorno" href="{% url 'editar' filme.id %}">Editar</a>
+                            <form action="{% url 'excluir' filme.id %}" method="post" onsubmit="return confirm('Excluir este filme da lista?');">
+                                {% csrf_token %}
+                                <button type="submit" class="botao botao-vermelho">Excluir</button>
+                            </form>
+                        </div>
+                    </article>
+                    {% empty %}
+                    <div class="vazio">
+                        <strong>Nenhum filme por aqui.</strong>
+                        <p>{% if busca %}Tente pesquisar outro título.{% else %}Cadastre seu primeiro filme no formulário ao lado.{% endif %}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <aside class="painel cadastro" id="cadastro">
+                <p class="etiqueta">NOVO REGISTRO</p>
+                <h2>Cadastrar filme</h2>
+                <p class="texto-leve">Preencha as informações para adicionar à sua lista.</p>
+                <form method="post" action="{% url 'inicio' %}">
+                    {% csrf_token %}
+                    {% for campo in formulario %}
+                    <div class="campo {% if campo.name == 'assistido' %}campo-check{% endif %}">
+                        <label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+                        {{ campo }}
+                        {% for erro in campo.errors %}<small class="erro">{{ erro }}</small>{% endfor %}
+                    </div>
+                    {% endfor %}
+                    <button class="botao botao-azul botao-largo" type="submit">Salvar filme</button>
+                </form>
+            </aside>
+        </div>
+
+        <section class="painel pesquisa-externa" id="omdb">
+            <p class="etiqueta">EXPLORAR</p>
+            <h2>Descubra outros filmes</h2>
+            <p class="texto-leve">Busque filmes na base OMDb. Essa pesquisa é independente da sua lista cadastrada.</p>
+            <form class="busca-local" action="{% url 'inicio' %}#omdb" method="get">
+                <input type="search" name="omdb" value="{{ termo }}" placeholder="Ex.: Spider-Man" aria-label="Pesquisar filmes na OMDb" required>
+                <button class="botao botao-escuro" type="submit">Buscar na OMDb</button>
+            </form>
+            {% if aviso %}<p class="aviso">{{ aviso }}</p>{% endif %}
+            {% if encontrados %}
+            <div class="resultados-api">
+                {% for item in encontrados %}
+                <article class="api-card">
+                    {% if item.Poster and item.Poster != 'N/A' %}
+                        <img src="{{ item.Poster }}" alt="Pôster de {{ item.Title }}" loading="lazy">
+                    {% else %}
+                        <div class="sem-poster">Sem pôster</div>
+                    {% endif %}
+                    <div class="api-infos">
+                        <h3>{{ item.Title }}</h3>
+                        <p>{{ item.Year }}</p>
+                        {% if item.imdbID %}
+                            <a href="https://www.imdb.com/title/{{ item.imdbID }}/" target="_blank" rel="noopener noreferrer">Ver no IMDb</a>
+                        {% endif %}
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </section>
+    </main>
+    <footer>Projeto CineLog · Desenvolvido com Django</footer>
+</body>
+</html>

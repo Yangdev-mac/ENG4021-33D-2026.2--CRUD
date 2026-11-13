@@ -1,0 +1,105 @@
+/* Visual original do CineLog: cores azul e verde, layout responsivo. */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #f1f5fa; color: #18283f; font-family: Arial, Helvetica, sans-serif; line-height: 1.5; }
+a { color: inherit; }
+button, input { font: inherit; }
+.largura { max-width: 1180px; margin: auto; padding-left: 22px; padding-right: 22px; }
+
+/* Cabeçalho */
+.topo { background: #101e35; color: white; }
+.cabecalho { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.marca { font-size: 23px; font-weight: 800; letter-spacing: -.6px; text-decoration: none; }
+.link-topo { font-size: 14px; font-weight: bold; color: #9fe4d7; text-decoration: none; }
+.link-topo:hover { text-decoration: underline; }
+
+/* Apresentação */
+.destaque { background: linear-gradient(115deg, #153257, #145768); color: white; border-radius: 18px; padding: 38px; margin: 28px 0 24px; }
+.destaque h1 { font-size: clamp(27px, 4vw, 39px); line-height: 1.18; max-width: 630px; margin: 6px 0 10px; }
+.destaque p { margin: 0; color: #d7e9ed; }
+.destaque .sobre { font-size: 12px; font-weight: bold; letter-spacing: 2px; color: #a3ede1; }
+.numeros { display: flex; gap: 32px; margin-top: 28px; flex-wrap: wrap; }
+.numeros div { display: flex; align-items: center; gap: 10px; }
+.numeros strong { font-size: 29px; color: #aaf0dc; }
+.numeros span { font-size: 13px; color: #e2f0f1; }
+
+/* Blocos principais */
+.principal { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(270px, 1fr); gap: 22px; align-items: start; }
+.painel { background: white; border: 1px solid #e1e8f0; border-radius: 16px; padding: 26px; box-shadow: 0 3px 14px rgba(20, 46, 78, .04); }
+.painel h2 { margin: 3px 0 8px; font-size: 24px; }
+.etiqueta { margin: 0; font-size: 11px; font-weight: bold; letter-spacing: 1.9px; color: #198578; }
+.texto-leve { color: #6a788b; font-size: 14px; margin: 0 0 21px; }
+.busca-local { display: flex; gap: 9px; align-items: center; margin: 21px 0; }
+.busca-local input { flex: 1; min-width: 0; }
+.limpar { color: #35617f; font-size: 13px; font-weight: bold; }
+
+/* Campos e botões */
+input[type='search'], input[type='text'], input[type='number'] { width: 100%; min-height: 43px; padding: 10px 12px; border: 1px solid #ced7e3; border-radius: 9px; background: #fbfdff; color: #18283f; }
+input:focus { outline: 2px solid #5ac9bb; outline-offset: 1px; }
+.campo { margin-bottom: 16px; }
+.campo label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 6px; }
+.campo-check { display: flex; flex-direction: row-reverse; justify-content: flex-end; align-items: center; gap: 9px; }
+.campo-check label { margin: 0; }
+.campo-check input { width: 18px; height: 18px; accent-color: #087c87; }
+.erro { color: #aa283e; display: block; margin-top: 4px; }
+.botao { border: 1px solid transparent; border-radius: 9px; padding: 10px 15px; display: inline-flex; justify-content: center; align-items: center; font-size: 13px; font-weight: bold; text-decoration: none; cursor: pointer; min-height: 40px; white-space: nowrap; }
+.botao-azul { background: #0f728a; color: white; }
+.botao-azul:hover { background: #0a5a70; }
+.botao-escuro { background: #183554; color: white; }
+.botao-escuro:hover { background: #0e243c; }
+.botao-contorno { border-color: #cad6e2; background: white; color: #274c70; }
+.botao-contorno:hover { background: #eaf3f8; }
+.botao-vermelho { border-color: #f3d2d7; color: #ad3149; background: #fff5f6; }
+.botao-vermelho:hover { background: #ffe6e9; }
+.botao-largo { width: 100%; margin-top: 7px; }
+
+/* Cards de filmes cadastrados */
+.grade-filmes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+.filme-card { border: 1px solid #e0e7ee; background: #f9fbfe; border-radius: 12px; padding: 17px; min-width: 0; }
+.filme-topo { display: flex; justify-content: space-between; align-items: center; gap: 7px; margin-bottom: 13px; flex-wrap: wrap; }
+.ano { color: #708296; font-weight: bold; font-size: 12px; }
+.situacao { font-size: 11px; border-radius: 20px; padding: 5px 9px; font-weight: bold; }
+.visto { background: #def8eb; color: #087d53; }
+.pendente { background: #fff2d8; color: #94640b; }
+.filme-card h3 { font-size: 18px; line-height: 1.25; margin: 0 0 11px; overflow-wrap: anywhere; }
+.filme-card p { color: #6a7788; font-size: 13px; margin: 5px 0; overflow-wrap: anywhere; }
+.acoes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 17px; }
+.acoes form { margin: 0; }
+.vazio { padding: 36px 16px; border: 1px dashed #b8cbdb; background: #f8fbff; border-radius: 12px; text-align: center; grid-column: 1 / -1; }
+.vazio p { color: #708093; margin-bottom: 0; font-size: 14px; }
+
+/* Consulta externa */
+.pesquisa-externa { margin: 22px 0 42px; }
+.aviso { margin-top: 12px; background: #fff5e0; padding: 12px; border-radius: 8px; color: #855d12; }
+.resultados-api { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 15px; margin-top: 20px; }
+.api-card { overflow: hidden; border-radius: 11px; border: 1px solid #e1e8f0; }
+.api-card img, .sem-poster { display: block; width: 100%; height: 210px; object-fit: cover; background: #dfeaf1; }
+.sem-poster { display: flex; align-items: center; justify-content: center; color: #65798d; }
+.api-infos { padding: 12px; }
+.api-infos h3 { font-size: 14px; line-height: 1.3; margin: 0; }
+.api-infos p { color: #768698; font-size: 12px; margin: 6px 0; }
+.api-infos a { font-size: 12px; color: #126b86; font-weight: bold; }
+
+/* Tela de edição */
+.edicao { max-width: 590px; margin: 45px auto; padding: 0 20px; }
+.edicao-card { padding: 32px; }
+.edicao-card h1 { margin: 6px 0; font-size: 28px; }
+.botoes-edicao { margin-top: 22px; display: flex; gap: 10px; flex-wrap: wrap; }
+footer { text-align: center; padding: 0 20px 30px; color: #8090a1; font-size: 12px; }
+
+@media (max-width: 850px) {
+    .principal { grid-template-columns: 1fr; }
+    .resultados-api { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+    .largura { padding-left: 14px; padding-right: 14px; }
+    .destaque { padding: 26px 22px; margin-top: 17px; }
+    .painel { padding: 20px; }
+    .grade-filmes { grid-template-columns: 1fr; }
+    .resultados-api { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .busca-local { flex-wrap: wrap; }
+    .busca-local .botao { flex: 1; }
+    .numeros { gap: 15px; }
+    .link-topo { font-size: 12px; }
+    .edicao { margin: 22px auto; }
+}

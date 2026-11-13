@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Editar filme | CineLog</title>
+    <link rel="stylesheet" href="{% static 'filmes/style.css' %}">
+</head>
+<body>
+    <header class="topo">
+        <div class="largura cabecalho">
+            <a class="marca" href="{% url 'inicio' %}">▶ CineLog</a>
+            <a class="link-topo" href="{% url 'inicio' %}">Voltar ao catálogo</a>
+        </div>
+    </header>
+
+    <main class="edicao">
+        <section class="painel edicao-card">
+            <p class="etiqueta">ATUALIZAR REGISTRO</p>
+            <h1>Editar filme</h1>
+            <p class="texto-leve">Altere os dados de <strong>{{ filme.titulo }}</strong>.</p>
+            <form method="post">
+                {% csrf_token %}
+                {% for campo in formulario %}
+                <div class="campo {% if campo.name == 'assistido' %}campo-check{% endif %}">
+                    <label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+                    {{ campo }}
+                    {% for erro in campo.errors %}<small class="erro">{{ erro }}</small>{% endfor %}
+                </div>
+                {% endfor %}
+                <div class="botoes-edicao">
+                    <button type="submit" class="botao botao-azul">Salvar alterações</button>
+                    <a href="{% url 'inicio' %}" class="botao botao-contorno">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

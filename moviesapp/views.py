@@ -52,7 +52,7 @@ def inicio(request):
         'encontrados': encontrados,
         'aviso': aviso,
     }
-    return render(request, 'filmes/inicio.html', contexto)
+    return render(request, 'index.html', contexto)
 
 
 def editar(request, pk):
@@ -62,7 +62,7 @@ def editar(request, pk):
     if request.method == 'POST' and formulario.is_valid():
         formulario.save()
         return redirect('inicio')
-    return render(request, 'filmes/editar.html', {'formulario': formulario, 'filme': filme})
+    return render(request, 'edit_movie.html', {'formulario': formulario, 'filme': filme})
 
 
 def excluir(request, pk):

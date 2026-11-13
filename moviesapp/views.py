@@ -6,19 +6,16 @@ from .models import Filme
 
 
 def inicio(request):
-    # CREATE: salva um novo filme enviado pelo formulário.
     formulario = FilmeForm(request.POST or None)
     if request.method == 'POST' and formulario.is_valid():
         formulario.save()
         return redirect('inicio')
 
-    # READ: mostra os filmes cadastrados, com filtro por título.
     busca = request.GET.get('busca', '').strip()
     filmes = Filme.objects.all().order_by('-id')
     if busca:
         filmes = filmes.filter(titulo__icontains=busca)
 
-    # Busca externa opcional na OMDb (não interfere no CRUD).
     termo = request.GET.get('omdb', '').strip()
     encontrados = []
     aviso = ''
@@ -56,7 +53,6 @@ def inicio(request):
 
 
 def editar(request, pk):
-    # UPDATE: abre um filme existente e salva as alterações.
     filme = get_object_or_404(Filme, pk=pk)
     formulario = FilmeForm(request.POST or None, instance=filme)
     if request.method == 'POST' and formulario.is_valid():
@@ -66,7 +62,6 @@ def editar(request, pk):
 
 
 def excluir(request, pk):
-    # DELETE: só exclui quando o botão envia um POST.
     if request.method == 'POST':
         filme = get_object_or_404(Filme, pk=pk)
         filme.delete()
